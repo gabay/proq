@@ -1,6 +1,6 @@
-from typing import Iterable, Protocol, TypeVar
+from typing import Iterable, Protocol
 
-T = TypeVar("T")
+from .common import T
 
 
 class Collectible(Protocol[T]):

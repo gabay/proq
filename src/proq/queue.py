@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import enum
 import multiprocessing as mp
-from typing import Generic, Iterable, TypeVar
+from typing import Iterable
 
 from . import collectible
-
-T = TypeVar("T")
-U = TypeVar("U")
+from .common import T
 
 
 class MessageType(enum.Enum):

@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
-import multiprocessing as mp
-from typing import Callable, Iterable, TypeVar
+import functools
+from typing import Callable, Iterable
 
 from . import collectible
-
-T = TypeVar("T")
-U = TypeVar("U")
+from .common import T, U
 
 
 def create(objects: Iterable[T]) -> Proq[T]:
@@ -19,7 +17,22 @@ class Proq(collectible.Collectible[T]):
     items: Iterable[T]
 
     def map(self, f: Callable[[T], U]) -> Proq[U]:
-        return Proq([f(item) for item in self.items])
+        return Proq(map(f, self.items))
+
+    def foreach(self, f: Callable[[T], U]) -> Proq[T]:
+        def _foreach(item: T) -> T:
+            f(item)
+            return item
+
+        return self.map(_foreach)
+
+    def filter(self, f: Callable[[T], bool]) -> Proq[T]:
+        return Proq(filter(f, self.items))
+
+    def reduce(self, f: Callable[[T, T], T], initial: T | None = None) -> Proq[T]:
+        if initial is None:
+            return Proq(functools.reduce(f, self.items) for _ in range(1))
+        return Proq(functools.reduce(f, self.items, initial) for _ in range(1))
 
     def collect_iter(self) -> Iterable[T]:
         yield from self.items
