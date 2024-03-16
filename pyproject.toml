@@ -20,7 +20,7 @@ Home = "https://github.com/gabay/proq"
 "Bug Tracker" = "https://github.com/gabay/proq/issues"
 
 [project.optional-dependencies]
-dev = ["black"]
+dev = ["black", "mypy"]
 test = ["pytest", "pytest-cov"]
 
 [tool.pytest.ini_options]
