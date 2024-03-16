@@ -2,10 +2,8 @@ import proq
 
 
 def test_proq_create_collect():
-    assert proq.create([1, 2, 3, 4, 5]).collect() == [1, 2, 3, 4, 5]
+    assert proq.create([0, 1, 2, 3]).collect() == [0, 1, 2, 3]
 
 
-def test_proq_queue_empty():
-    proq_queue = proq.ProqQueue()
-    proq_queue.close()
-    assert proq_queue.collect() == []
+def test_proq_create_map_collect():
+    assert proq.create([0, 1, 2, 3]).map(lambda x: x + 1).collect() == [1, 2, 3, 4]
